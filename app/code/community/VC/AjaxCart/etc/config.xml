@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <VC_AjaxCart>
+            <version>1.0.0</version>
+        </VC_AjaxCart>
+    </modules>
+    <frontend>
+        <routers>
+            <vc_ajaxcart>
+                <use>standard</use>
+                <args>
+                    <module>VC_AjaxCart</module>
+                    <frontName>vc_ajaxcart</frontName>
+                </args>
+            </vc_ajaxcart>
+        </routers>
+        <layout>
+            <updates>
+                <vc_ajaxcart>
+                    <file>vc_ajaxcart.xml</file>
+                </vc_ajaxcart>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<vc_ajaxcart>
+				<use>admin</use>
+				<args>
+					<module>VC_AjaxCart</module>
+					<frontName>vc_ajaxcart</frontName>
+				</args>
+			</vc_ajaxcart>
+        </routers>
+    </admin>
+    <adminhtml>
+		
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<vc_all>
+							<children>
+					
+								<vc_ajaxcart>
+									<title>VC AjaxCart</title>
+									<sort_order>70</sort_order>						
+									
+								</vc_ajaxcart>
+							</children>
+						</vc_all>
+						<system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <vc_ajaxcart>
+                                            <title>VC AjaxCart Section</title>
+                                        </vc_ajaxcart>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+												
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<vc_ajaxcart>
+					<file>vc_ajaxcart.xml</file>
+				</vc_ajaxcart>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <vc_ajaxcart>
+                <class>VC_AjaxCart_Model</class>
+                <resourceModel>vc_ajaxcart_resource</resourceModel>
+            </vc_ajaxcart>
+        </models>	
+		
+		<resources>
+			<vc_ajaxcart_setup>
+				<setup>
+					<module>VC_AjaxCart</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</vc_ajaxcart_setup>
+			<vc_ajaxcart_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</vc_ajaxcart_write>
+			<vc_ajaxcart_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</vc_ajaxcart_read>
+		</resources>
+				
+        <blocks>
+            <vc_ajaxcart>
+                <class>VC_AjaxCart_Block</class>
+            </vc_ajaxcart>
+        </blocks>
+	
+        <helpers>
+            <vc_ajaxcart>
+                <class>VC_AjaxCart_Helper</class>
+            </vc_ajaxcart>
+        </helpers>
+		
+    </global>
+	
+	<default>
+		<vc_ajaxcart>
+			<general>
+				<enable>0</enable>
+				<tinycart_qty_label>My Cart,My Cart (%s item),My Cart (%s items)</tinycart_qty_label>
+			</general>
+		</vc_ajaxcart>
+	</default>
+	
+</config>

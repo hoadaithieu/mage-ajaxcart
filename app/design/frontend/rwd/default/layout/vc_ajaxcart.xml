@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+			<action method="addJs" ifconfig="vc_ajaxcart/general/enable"><script>lib/jquery/jquery-1.10.2.min.js</script></action>
+			<action method="addJs" ifconfig="vc_ajaxcart/general/enable"><script>lib/jquery/noconflict.js</script></action>
+		
+			<action method="addItem" ifconfig="vc_ajaxcart/general/enable"><type>skin_css</type><name>css/vc_ajaxcart/styles.css</name><params/></action>
+			<action method="addItem" ifconfig="vc_ajaxcart/general/enable"><type>skin_js</type><name>js/vc_ajaxcart/scripts.js</name><params/></action>		
+		</reference>	
+		
+		
+		<reference name="minicart_head">
+
+			<block type="vc_ajaxcart/checkout_cart_minicart" name="minicart_content" template="vc_ajaxcart/checkout/cart/minicart.phtml" before="-">
+				<block type="checkout/cart_sidebar" name="vc_ajaxcart_minicart_content" template="vc_ajaxcart/checkout/cart/minicart/items.phtml">
+					<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>vc_ajaxcart/checkout/cart/minicart/default.phtml</template></action>
+					<action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>vc_ajaxcart/checkout/cart/minicart/default.phtml</template></action>
+					<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>vc_ajaxcart/checkout/cart/minicart/default.phtml</template></action>
+					<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>vc_ajaxcart/checkout/cart/minicart/default.phtml</template></action>
+	
+					<block type="core/text_list" name="cart_sidebar.cart_promotion" as="cart_promotion" translate="label" module="checkout">
+						<label>Mini-cart promotion block</label>
+					</block>
+					<block type="core/text_list" name="cart_sidebar.extra_actions" as="extra_actions" translate="label" module="checkout">
+						<label>Shopping Cart Sidebar Extra Actions</label>
+					</block>
+				</block>
+			</block>	
+			
+		</reference>
+		
+		<reference name="global_messages">
+			<action method="addError" ifconfig="vc_ajaxcart/general/enable"><message>disable</message></action>	
+			<action method="addSuccess" ifconfig="vc_ajaxcart/general/enable"><message>disable</message></action>	
+		</reference>
+		
+	</default>
+	
+	<vc_ajaxcart_minicart>
+		<block type="vc_ajaxcart/checkout_cart_minicart" name="vc_ajaxcart_minicart_head" template="vc_ajaxcart/checkout/cart/minicart.phtml" before="-">
+			<block type="checkout/cart_sidebar" name="vc_ajaxcart_minicart_content" template="vc_ajaxcart/checkout/cart/minicart/items.phtml">
+				<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>vc_ajaxcart/checkout/cart/minicart/default.phtml</template></action>
+				<action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>vc_ajaxcart/checkout/cart/minicart/default.phtml</template></action>
+				<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>vc_ajaxcart/checkout/cart/minicart/default.phtml</template></action>
+				<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>vc_ajaxcart/checkout/cart/minicart/default.phtml</template></action>
+
+				<block type="core/text_list" name="cart_sidebar.cart_promotion" as="cart_promotion" translate="label" module="checkout">
+					<label>Mini-cart promotion block</label>
+				</block>
+				<block type="core/text_list" name="cart_sidebar.extra_actions" as="extra_actions" translate="label" module="checkout">
+					<label>Shopping Cart Sidebar Extra Actions</label>
+				</block>
+			</block>
+		</block>	
+	</vc_ajaxcart_minicart>
+	
+	<vc_ajaxcart_checkoutcart>
+		<block type="checkout/cart" name="vc_ajaxcart.checkout.cart">
+			<action method="setCartTemplate"><value>vc_ajaxcart/checkout/cart.phtml</value></action>
+			<action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
+			<action method="chooseTemplate"/>
+			<action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>vc_ajaxcart/checkout/cart/item/default.phtml</template></action>
+			<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>vc_ajaxcart/checkout/cart/item/default.phtml</template></action>
+			<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>vc_ajaxcart/checkout/cart/item/default.phtml</template></action>
+
+
+			<block type="core/text_list" name="checkout.cart.empty.widget" as="checkout_cart_empty_widget" translate="label">
+				<label>Empty Shopping Cart Content Before</label>
+			</block>
+
+			<block type="core/text_list" name="checkout.cart.top_methods" as="top_methods" translate="label">
+				<label>Payment Methods Before Checkout Button</label>
+				<block type="checkout/onepage_link" name="checkout.cart.methods.onepage.top" template="checkout/onepage/link.phtml" after="-" />
+			</block>
+
+			<block type="page/html_wrapper" name="checkout.cart.form.before" as="form_before" translate="label">
+				<label>Shopping Cart Items Before</label>
+			</block>
+
+			<block type="core/text_list" name="checkout.cart.methods" as="methods" translate="label">
+				<label>Payment Methods After Checkout Button</label>
+				<block type="checkout/onepage_link" name="checkout.cart.methods.onepage.bottom" template="checkout/onepage/link.phtml"/>
+				<block type="checkout/multishipping_link" name="checkout.cart.methods.multishipping" template="checkout/multishipping/link.phtml"/>
+			</block>
+
+			<block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>
+			<block type="core/text_list" name="checkout.cart.extra" translate="label">
+				<label>Checkout Forms Extra</label>
+			</block>
+			<block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
+			<block type="core/text_list" name="checkout.cart.widget" as="checkout_cart_widget" translate="label">
+				<label>Shopping Cart Items After</label>
+			</block>
+			<block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
+
+			<block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
+		</block>	
+	</vc_ajaxcart_checkoutcart>
+	
+	<checkout_cart_index>
+		<reference name="content">
+        </reference>
+	
+		<reference name="checkout.cart">
+			<action method="setCartTemplate" ifconfig="vc_ajaxcart/general/enable"><value>vc_ajaxcart/checkout/cart.phtml</value></action>
+			<action method="chooseTemplate" ifconfig="vc_ajaxcart/general/enable"/>
+			<action method="addItemRender" ifconfig="vc_ajaxcart/general/enable"><type>simple</type><block>checkout/cart_item_renderer</block><template>vc_ajaxcart/checkout/cart/item/default.phtml</template></action>
+			<action method="addItemRender" ifconfig="vc_ajaxcart/general/enable"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>vc_ajaxcart/checkout/cart/item/default.phtml</template></action>
+			<action method="addItemRender" ifconfig="vc_ajaxcart/general/enable"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>vc_ajaxcart/checkout/cart/item/default.phtml</template></action>
+			 
+        </reference>	
+	</checkout_cart_index>
+	
+	<catalog_product_view translate="label">
+		<!--
+		<block type="vc_ajaxcart/catalog_product_view" name="vc_ajaxcart.product.info.addtocart" as="vc_ajaxcart.addtocart" template="vc_ajaxcart/catalog/product/view/addtocart.phtml"/>           
+	
+		<reference name="product.info.options.wrapper.bottom">
+			<action method="insert"><block>vc_ajaxcart.product.info.addtocart</block></action>
+			<remove name="product.info.addtocart"/>	
+		</reference>
+		-->
+		<reference name="product.info.addtocart">
+			<action method="setTemplate" ifconfig="vc_ajaxcart/general/enable"><template>vc_ajaxcart/catalog/product/view/addtocart.phtml</template></action>
+		</reference>
+	</catalog_product_view>
+	
+	<catalog_category_default translate="label">
+		<reference name="product_list">
+			<action method="setTemplate" ifconfig="vc_ajaxcart/general/enable"><template>vc_ajaxcart/catalog/product/list.phtml</template></action>
+		</reference>	
+	</catalog_category_default>
+	
+	<catalog_category_layered translate="label">
+		<reference name="product_list">
+			<action method="setTemplate" ifconfig="vc_ajaxcart/general/enable"><template>vc_ajaxcart/catalog/product/list.phtml</template></action>
+		</reference>	
+	</catalog_category_layered>
+</layout>

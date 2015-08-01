@@ -1,0 +1,51 @@
+<?php
+/**
+ * Shoping cart sidebar
+ *
+ * @see VC_AjaxCart_Block_Checkout_Cart_Sidebar
+ */
+ 
+$isHide = Mage::registry('remove_container'); 
+?>
+
+<?php if (!$isHide) :?>
+<div class="header-minicart">
+	<div id="header-cart" class="block block-cart">
+<?php endif;?>	
+		<?php echo $this->getChildHtml('vc_ajaxcart_minicart_content');?>
+<?php if (!$isHide) :?>		
+	</div>
+</div>
+<?php endif;?>
+
+<script type="text/javascript">
+TinyCart.options.formKey = '<?php echo $this->helper('vc_ajaxcart')->getFormKey();?>';
+
+TinyCart.options.container = '#header-cart';
+
+//TinyCart.options.qtyLabel = '.header-minicart .count';
+TinyCart.options.qtyLabel = '.top-link-cart';
+TinyCart.options.qtyButtonPrefix = '#qbutton-';
+TinyCart.options.qtyInputPrefix = '#qinput-';
+
+TinyCart.options.cartMsg = TinyCart.options.container + ' .message';
+TinyCart.options.overlay = TinyCart.options.container + ' .vc_overlay';
+TinyCart.options.removeButton = TinyCart.options.container + ' .remove';
+AjaxCart.init();
+
+jQuery(function() {
+	
+<?php if (!$isHide) :?>		
+	jQuery(TinyCart.options.container).hide();
+<?php endif;?>	
+
+	if (jQuery(TinyCart.options.qtyLabel).length > 0) {
+		jQuery(TinyCart.options.qtyLabel).unbind('click').click(function(event) {
+			event.preventDefault();
+			jQuery(TinyCart.options.container).show();
+		});
+	}
+});
+
+
+</script>

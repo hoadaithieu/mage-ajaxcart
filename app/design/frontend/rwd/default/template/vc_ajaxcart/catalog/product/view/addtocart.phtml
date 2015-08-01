@@ -1,0 +1,76 @@
+
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php if($_product->isSaleable()): ?>
+    <div class="add-to-cart">
+        <?php if(!$_product->isGrouped()): ?>
+        <div class="qty-wrapper">
+            <label for="qty"><?php echo $this->__('Qty:') ?></label>
+            <input type="text" pattern="\d*" name="qty" id="qty" maxlength="12" value="<?php echo max($this->getProductDefaultQty() * 1, 1) ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+        </div>
+        <?php endif; ?>
+        <div class="add-to-cart-buttons">
+            <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" data-block="checkout" data-link="<?php echo $this->helper('vc_ajaxcart')->getAddCartUrl()?>" onclick="productAddToAjaxCartForm.submit(this, '<?php echo $this->helper('vc_ajaxcart')->getAddCartUrl()?>')"><span><span><?php echo $buttonTitle ?></span></span></button>
+            <?php echo $this->getChildHtml('', true, true) ?>
+        </div>
+		
+		<div class="vc_ajaxcart"></div>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">
+//<![CDATA[
+var productAddToAjaxCartForm = new VarienForm('product_addtocart_form');
+
+productAddToAjaxCartForm.options = {}
+
+productAddToAjaxCartForm.options.overlay = '.vc_ajaxcart';
+
+productAddToAjaxCartForm.showOverlay = function() {
+	jQuery(productAddToAjaxCartForm.options.overlay).show().addClass('vc_loading');
+}
+
+productAddToAjaxCartForm.hideOverlay = function() {
+	jQuery(productAddToAjaxCartForm.options.overlay).hide().removeClass('vc_loading');
+}
+
+TinyCart.options.formKey = '<?php echo $this->helper('vc_ajaxcart')->getFormKey();?>';
+
+TinyCart.options.formId = '#product_addtocart_form';
+AjaxCart.options.blockType = 'mini';
+AjaxCart.init();
+
+
+
+
+productAddToAjaxCartForm.submit = function(button, url) {
+	if (this.validator.validate()) {
+		var e = null;
+		productAddToAjaxCartForm.button = button;
+		try {
+			this.showOverlay();
+			jQuery.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: jQuery(button).attr('data-link'),
+				data: jQuery(TinyCart.options.formId).serialize()+'&form_key='+AjaxCart.getFormKey()
+			}).done(function(result) {
+				TinyCart.success(result);
+				AjaxCart.showMessage(result.code, result.msg);
+				productAddToAjaxCartForm.button.disabled = false;
+				productAddToAjaxCartForm.hideOverlay();
+			}).error(function() {
+				TinyCart.error(result);
+				productAddToAjaxCartForm.button.disabled = false;
+				productAddToAjaxCartForm.hideOverlay();
+			});				
+			
+		} catch (e) {
+		}
+		
+		if (button && button != 'undefined') {
+			button.disabled = true;
+		}
+	}
+}.bind(productAddToAjaxCartForm);
+//]]>
+</script>
